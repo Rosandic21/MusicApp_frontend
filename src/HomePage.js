@@ -1,13 +1,16 @@
 import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
 //import Form from 'react-bootstrap/form'
+import './index.css';
+
 
 export const HomePage = () => {
 const [userData, setUserData] = useState(null);
 const [topArtists, setTopArtists] = useState(null);
 const [topTracks, setTopTracks] = useState(null);
-//const [showTopArtists, setShowTopArtists] = useState(false);
-//const [showTopTracks, setShowTopTracks] = useState(false);
+const [newReleasesData, setNewReleases] = useState(null);
+const [showTopArtists, setShowTopArtists] = useState(false);
+const [showTopTracks, setShowTopTracks] = useState(false);
 
     // Parse URL for accessToken, time accessToken expires, and refreshToken.
    const queryParams = new URLSearchParams(window.location.search)
@@ -34,7 +37,10 @@ const [topTracks, setTopTracks] = useState(null);
 
    // call getUserData when the component mounts
    useEffect(() => {
-     if(accessToken) getUserData(accessToken);
+     if(accessToken) {
+       getUserData(accessToken);
+       getNewReleases(accessToken);
+     }
      }, [accessToken]); // re-render if accessToken changes state
      
   // get users most listened to artists 
@@ -55,9 +61,9 @@ const [topTracks, setTopTracks] = useState(null);
   }
   
   // get users most listened to songs 
-  const getTopTracks = async (accessToken) => { // *****************TODO: print ${artist}: ${name}
+  const getTopTracks = async (accessToken) => { 
     try{
-      const response = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10`, {
+      const response = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=20`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -70,108 +76,83 @@ const [topTracks, setTopTracks] = useState(null);
       setTopTracks(null);
     }
   }
-   
-  //if(accessToken) getTopTracks(accessToken)
-
-  //const getTopTracks = 
-  //https://api.spotify.com/v1/me/top/tracks
-   
-    // return (
-    //     <div>
-    //       <h1>Test</h1>
-    //       <button type="button" onClick={() => getUserData(accessToken)}>Fetch my data</button>
-    //       <h2>Home Page with Query Parameters:</h2>
-    //       {userData && ( // conditional rendering statement to check if userData is not null and is true
-    //         <div>
-    //           <h3>User Data:</h3>
-    //           <p>Name: {userData.display_name}</p>
-    //           {/* Add other user data fields as needed */}
-    //         </div>
-    //       )}
-    //     </div>
-    //   );
-    // }
-
-
-    return (
-      <div>
-        {userData ? (
-          <>
-            <p>Hello, {userData.display_name}!</p>
-            <p>Checkout your spotify wrapped!</p> 
-            <button type="button" id="artistsButton" onClick={() => getTopArtists(accessToken)}>My top artists</button> <t></t>
-            <button type="button" id="tracksButton" onClick={() => getTopTracks(accessToken)}>My top songs</button>
-            {topArtists && topArtists.items.length > 0 && (
-              topArtists.items.map((artist, index) => (
-                <div key={index}>
-                  <p>artist: {artist.name}</p>
-                  {artist.images.length >= 3 && (
-                    <img src={artist.images[2].url} alt="Artist" />
-                  )}
-                </div>
-              ))
-            )}
-            {topTracks && topTracks.items.length > 0 && (
-              topTracks.items.map((tracks, index) => (
-                <div key={index}>
-                  <p>
-                    #{index+1}: {tracks.name} | artist: {tracks.artists[0].name}
-                  </p> 
-                </div>
-              )
-              )
-            )}
-          </>
-        ) : (
-          <p>Loading data...</p>
-        )}
-      </div>
-    );
-
-
-    // return (
-    //     <div>
-    //       {userData ? (
-    //         <>
-    //           <p>Hello, {userData.display_name}!</p>
-    //           <p>Checkout your spotify wrapped!</p>
-    //           {topArtists && topArtists.items.length > 0 && (
-    //             topArtists.items.map((artist, index) => (
-    //               <div key={index}>
-    //                 <p>{artist.name}</p>
-    //                 {artist.images.length >= 3 && (
-    //                   <img src={artist.images[2].url} alt="Artist" />
-    //                 )}
-    //               </div>
-    //             ))
-    //           )}
-    //         </>
-    //       ) : (
-    //         <p>Loading data...</p>
-    //       )}
-    //     </div>
-    //   );
-      
-
-    //   <div>
-    //   {userData ? (
-    //     <>
-    //       <p>Hello, {userData.display_name}!</p>
-    //       <p>Checkout your spotify wrapped!</p>
-    //       {topArtists && topArtists.items.length > 0 && topArtists.items[0].images.length >= 3 && (
-    //         <div>
-    //         <p>{topArtists.items[0].name}</p>
-    //           <img src={topArtists.items[0].images[2].url} alt="Artist" />
-    //           </div>
-    //       )}
-    //     </>
-    //   ) : (
-    //     <p>Loading data...</p>
-    //   )}
-    // </div>
-    // )
+  
+  // get data on new album releases
+  const getNewReleases = async (accessToken) => {
+    try{
+      const response = await axios.get(`https://api.spotify.com/v1/browse/new-releases?country=US&limit=10&offset=0`, {
+        headers: {
+          Authorization: `Bearer  ${accessToken}`
+        }
+      });
+      const newReleasesData = response.data;
+      console.log("New releases: ", newReleasesData);
+      setNewReleases(newReleasesData);
+    } catch(error){
+      console.log("Error getting new releases: ", error);
+      setNewReleases(null);
+    }
   }
 
+  return (
+    <div>
+      
+    {userData ? (
+      <>
+        <p>Hello, {userData.display_name}!</p>
+        <p>
+            {newReleasesData ? (
+            <> <h1>Explore new releases: </h1>
+              {newReleasesData.albums.items.length > 0 &&
+                newReleasesData.albums.items.map((eachReleasedItem, index) => (
+                <div key={index}>
+                  <img src={eachReleasedItem.images[1].url} alt="Album cover img"/>
+                  <p>Artist Name: {eachReleasedItem.artists[0].name}</p>
+                  <p>Album Name: {eachReleasedItem.name}</p>
+                  <p>Release Date: {eachReleasedItem.release_date}</p>
+                  <p>Total Tracks: {eachReleasedItem.total_tracks}</p>
+                  <p>Type: {eachReleasedItem.type}</p>
+                  </div>
+              ))}
+            </>
+            ) : (<p>waiting on data</p>)
+            } 
+        </p>
+        <p>Checkout your Spotify wrapped!</p>
+        <button type="button" class="blueButton" id="artistsButton" onClick={() => {getTopArtists(accessToken); setShowTopArtists(!showTopArtists);}}>
+          {showTopArtists ? 'Hide top artists' : 'Show top artists'}
+        </button>
+        
+
+        <button type="button" class="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
+          {showTopTracks ? 'Hide top songs' : 'Show top songs'}
+        </button>
+        {showTopArtists && topArtists && topArtists.items.length > 0 && (
+          topArtists.items.map((artist, index) => (
+            <div key={index}>
+              <p>artist: {artist.name}</p>
+              {artist.images.length >= 3 && (
+                <img src={artist.images[2].url} alt="Artist" />
+              )}
+            </div>
+          ))
+        )}
+        {showTopTracks && topTracks && topTracks.items.length > 0 && (
+          topTracks.items.map((track, index) => (
+            <div key={index}>
+              <p>
+                #{index + 1}: {track.name} | artist: {track.artists[0].name}
+              </p>
+            </div>
+          ))
+        )}
+      </>
+    ) : (
+      <p>Loading data...</p>
+    )}
+  </div>
+);
+};
 
  /* <FormControl 
         type="text"
