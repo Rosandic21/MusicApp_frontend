@@ -6,6 +6,7 @@ import UserInfo from './UserInfo';
 import NewReleases from './NewReleases';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
+import MusicButtons from './musicButtons';
 
 
 export const HomePage = () => {
@@ -102,35 +103,57 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     }
   }, [accessToken]); // re-render if accessToken changes state
 
+
   return (
     <div>
       {(userData && newReleasesData && topArtists && topTracks) ? (
         <>
           <UserInfo userData={userData} />
           <NewReleases newReleasesData={newReleasesData} /> 
-          <div className="musicContainer">
-          <button
-          type="button"
-          className="blueButton"
-          id="artistsButton"
-          onClick={() => {
-            getTopArtists(accessToken);
-            setShowTopArtists(!showTopArtists);
-          }}
-        >
-          {showTopArtists ? 'Hide top artists' : 'Show top artists'}
-        </button>
-
-          <button type="button" className="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
-          {showTopTracks ? 'Hide top songs' : 'Show top songs'}
-        </button>
-        </div>
+          <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
         </>
       ) : <p>Loading data...</p>}
     </div>
   );
+
+
+
+
+
+
+
+
+  // return (
+  //   <div>
+  //     {(userData && newReleasesData && topArtists && topTracks) ? (
+  //       <>
+  //         <UserInfo userData={userData} />
+  //         <NewReleases newReleasesData={newReleasesData} /> 
+  //         <div className="musicContainer">
+  //         <button
+  //         type="button"
+  //         className="blueButton"
+  //         id="artistsButton"
+  //         onClick={() => {
+  //           getTopArtists(accessToken);
+  //           setShowTopArtists(!showTopArtists);
+  //         }}
+  //       >
+  //         {showTopArtists ? 'Hide top artists' : 'Show top artists'}
+  //       </button>
+
+  //         <button type="button" className="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
+  //         {showTopTracks ? 'Hide top songs' : 'Show top songs'}
+  //       </button>
+  //       </div>
+  //         <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
+  //         <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
+  //       </>
+  //     ) : <p>Loading data...</p>}
+  //   </div>
+  // );
 
 };
 

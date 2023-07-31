@@ -1,6 +1,5 @@
 // TopArtists.js
 import React from 'react';
-import './index.css';
 
 const TopArtists = ({ showTopArtists, setShowTopArtists, topArtists, getTopArtists, accessToken }) => {
   return (
