@@ -2,6 +2,8 @@ import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
 //import Form from 'react-bootstrap/form'
 import './index.css';
+import Slider from 'react-slick';
+import carouselSettings from './carousel';
 
 
 export const HomePage = () => {
@@ -80,7 +82,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
   // get data on new album releases
   const getNewReleases = async (accessToken) => {
     try{
-      const response = await axios.get(`https://api.spotify.com/v1/browse/new-releases?country=US&limit=10&offset=0`, {
+      const response = await axios.get(`https://api.spotify.com/v1/browse/new-releases?country=US&limit=20&offset=0`, {
         headers: {
           Authorization: `Bearer  ${accessToken}`
         }
@@ -99,34 +101,40 @@ const [showTopTracks, setShowTopTracks] = useState(false);
       
     {userData ? (
       <>
-        <p>Hello, {userData.display_name}!</p>
-        <p>
+        <p id="introText">Hello, {userData.display_name}!</p>
             {newReleasesData ? (
-            <> <h1>Explore new releases: </h1>
-              {newReleasesData.albums.items.length > 0 &&
-                newReleasesData.albums.items.map((eachReleasedItem, index) => (
-                <div key={index}>
-                  <img src={eachReleasedItem.images[1].url} alt="Album cover img"/>
-                  <p>Artist Name: {eachReleasedItem.artists[0].name}</p>
-                  <p>Album Name: {eachReleasedItem.name}</p>
-                  <p>Release Date: {eachReleasedItem.release_date}</p>
-                  <p>Total Tracks: {eachReleasedItem.total_tracks}</p>
-                  <p>Type: {eachReleasedItem.type}</p>
+            <>
+            <b id="introText">Explore new releases: </b>
+            {newReleasesData.albums.items.length > 0 && (
+              <div className="slider-wrapper">
+              <Slider {...carouselSettings}>
+                {newReleasesData.albums.items.map((eachReleasedItem, index) => (
+                  <div key={index}>
+                    <img src={eachReleasedItem.images[1].url} alt="Album cover img" className="slider-image" />
+                    <p>Artist Name: {eachReleasedItem.artists[0].name}</p>
+                    <p>Title: {eachReleasedItem.name}</p>
+                    <p>Type: {eachReleasedItem.album_type}</p>
+                    {eachReleasedItem.total_tracks > 1 && (
+                      <p>Total Tracks: {eachReleasedItem.total_tracks}</p>
+                    )}
+                    <p>Release Date: {eachReleasedItem.release_date}</p>
                   </div>
-              ))}
+                ))}
+              </Slider>
+              </div>
+            )}
             </>
             ) : (<p>waiting on data</p>)
             } 
-        </p>
-        <p>Checkout your Spotify wrapped!</p>
+        <div className="musicContainer">
+        <p className="pShadow">Checkout your Spotify wrapped!</p>
         <button type="button" class="blueButton" id="artistsButton" onClick={() => {getTopArtists(accessToken); setShowTopArtists(!showTopArtists);}}>
           {showTopArtists ? 'Hide top artists' : 'Show top artists'}
         </button>
-        
-
         <button type="button" class="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
           {showTopTracks ? 'Hide top songs' : 'Show top songs'}
-        </button>
+        </button>  
+        </div>
         {showTopArtists && topArtists && topArtists.items.length > 0 && (
           topArtists.items.map((artist, index) => (
             <div key={index}>

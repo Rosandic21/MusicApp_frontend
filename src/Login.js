@@ -10,7 +10,7 @@ export const Login = () => {
         <h1>Welcome to SpotifyRemixed!</h1>
         <b>This site offers a bundle of features in a way Spotify just doesn't</b>
         <p>Click the button and login with Spotify to get started:</p>
-        <button type="button" onClick={redirectToLogin}>Login</button>
+        <button type="button" className="blueButton" onClick={redirectToLogin}>Login</button>
     </div>
    )};
 
