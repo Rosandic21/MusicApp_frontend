@@ -4,6 +4,7 @@ import axios from 'axios';
 import './index.css';
 import Slider from 'react-slick';
 import carouselSettings from './carousel';
+//import embeddedPlayer from './iFrameEmbed';
 
 
 export const HomePage = () => {
@@ -36,6 +37,8 @@ const [showTopTracks, setShowTopTracks] = useState(false);
             setUserData(null);
         }
    };
+
+   //embeddedPlayer();
 
    // call getUserData when the component mounts
    useEffect(() => {
@@ -96,9 +99,9 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     }
   }
 
+
   return (
     <div>
-      
     {userData ? (
       <>
         <p id="introText">Hello, {userData.display_name}!</p>
@@ -123,7 +126,9 @@ const [showTopTracks, setShowTopTracks] = useState(false);
               </Slider>
               </div>
             )}
-            </>
+              </>
+            
+            
             ) : (<p>waiting on data</p>)
             } 
         <div className="musicContainer">
@@ -158,16 +163,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     ) : (
       <p>Loading data...</p>
     )}
-  </div>
-);
-};
-
- /* <FormControl 
-        type="text"
-        placeholder="Post Malone, Travis Scott, Drake, Beyonce, Kanye West"
-        onChange={}
-        </Form>
-        
-        </div>
-    ) */
+    </div>
+  );
+    }
 export default HomePage;

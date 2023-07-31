@@ -48,7 +48,7 @@ code {
 }
 
 .slider-wrapper {
-  background-color:#1d04a7;
+  background-image: linear-gradient(to right, #150766, #3b82f6);
   width: 80%;
   margin: 0 auto;
   padding: 30px;
@@ -59,7 +59,7 @@ code {
 
 .slider-wrapper .slick-slide {
   margin-right: 3px;
-  max-height:200px;
+  max-height:210px;
 }
 
 .slider-wrapper .slick-prev {
