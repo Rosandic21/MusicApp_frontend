@@ -1,10 +1,11 @@
 import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
-//import Form from 'react-bootstrap/form'
 import './index.css';
-import Slider from 'react-slick';
-import carouselSettings from './carousel';
 //import embeddedPlayer from './iFrameEmbed';
+import UserInfo from './UserInfo';
+import NewReleases from './NewReleases';
+import TopArtists from './TopArtists';
+import TopTracks from './TopTracks';
 
 
 export const HomePage = () => {
@@ -39,14 +40,6 @@ const [showTopTracks, setShowTopTracks] = useState(false);
    };
 
    //embeddedPlayer();
-
-   // call getUserData when the component mounts
-   useEffect(() => {
-     if(accessToken) {
-       getUserData(accessToken);
-       getNewReleases(accessToken);
-     }
-     }, [accessToken]); // re-render if accessToken changes state
      
   // get users most listened to artists 
   const getTopArtists = async(accessToken, term) => {
@@ -99,71 +92,46 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     }
   }
 
+  // get api data when the component mounts
+  useEffect(() => {
+    if(accessToken) {
+      getUserData(accessToken);
+      getNewReleases(accessToken);
+      getTopArtists(accessToken);
+      getTopTracks(accessToken);
+    }
+  }, [accessToken]); // re-render if accessToken changes state
 
   return (
     <div>
-    {userData ? (
-      <>
-        <p id="introText">Hello, {userData.display_name}!</p>
-            {newReleasesData ? (
-            <>
-            <b id="introText">Explore new releases: </b>
-            {newReleasesData.albums.items.length > 0 && (
-              <div className="slider-wrapper">
-              <Slider {...carouselSettings}>
-                {newReleasesData.albums.items.map((eachReleasedItem, index) => (
-                  <div key={index}>
-                    <img src={eachReleasedItem.images[1].url} alt="Album cover img" className="slider-image" />
-                    <p>Artist Name: {eachReleasedItem.artists[0].name}</p>
-                    <p>Title: {eachReleasedItem.name}</p>
-                    <p>Type: {eachReleasedItem.album_type}</p>
-                    {eachReleasedItem.total_tracks > 1 && (
-                      <p>Total Tracks: {eachReleasedItem.total_tracks}</p>
-                    )}
-                    <p>Release Date: {eachReleasedItem.release_date}</p>
-                  </div>
-                ))}
-              </Slider>
-              </div>
-            )}
-              </>
-            
-            
-            ) : (<p>waiting on data</p>)
-            } 
-        <div className="musicContainer">
-        <p className="pShadow">Checkout your Spotify wrapped!</p>
-        <button type="button" class="blueButton" id="artistsButton" onClick={() => {getTopArtists(accessToken); setShowTopArtists(!showTopArtists);}}>
+      {(userData && newReleasesData && topArtists && topTracks) ? (
+        <>
+          <UserInfo userData={userData} />
+          <NewReleases newReleasesData={newReleasesData} /> 
+          <div className="musicContainer">
+          <button
+          type="button"
+          className="blueButton"
+          id="artistsButton"
+          onClick={() => {
+            getTopArtists(accessToken);
+            setShowTopArtists(!showTopArtists);
+          }}
+        >
           {showTopArtists ? 'Hide top artists' : 'Show top artists'}
         </button>
-        <button type="button" class="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
+
+          <button type="button" className="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
           {showTopTracks ? 'Hide top songs' : 'Show top songs'}
-        </button>  
+        </button>
         </div>
-        {showTopArtists && topArtists && topArtists.items.length > 0 && (
-          topArtists.items.map((artist, index) => (
-            <div key={index}>
-              <p>artist: {artist.name}</p>
-              {artist.images.length >= 3 && (
-                <img src={artist.images[2].url} alt="Artist" />
-              )}
-            </div>
-          ))
-        )}
-        {showTopTracks && topTracks && topTracks.items.length > 0 && (
-          topTracks.items.map((track, index) => (
-            <div key={index}>
-              <p>
-                #{index + 1}: {track.name} | artist: {track.artists[0].name}
-              </p>
-            </div>
-          ))
-        )}
-      </>
-    ) : (
-      <p>Loading data...</p>
-    )}
+          <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
+          <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
+        </>
+      ) : <p>Loading data...</p>}
     </div>
   );
-    }
+
+};
+
 export default HomePage;

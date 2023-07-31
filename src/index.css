@@ -70,7 +70,7 @@ code {
   right: -10px;
 }
 
-.pShadow {
+/* .pShadow {
   @apply inline-block py-3 px-4 bg-blue-100 text-black font-bold rounded;
   animation: pulse 1s infinite alternate;
 }
@@ -82,5 +82,5 @@ code {
   to {
     opacity: 0.5;
   }
-}
+} */
 
