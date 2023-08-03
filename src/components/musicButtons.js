@@ -1,7 +1,7 @@
 import React from 'react'
-import './index.css'
+import '../index.css'
 
-export const MusicButtons = ( { getTopTracks, setShowTopTracks, getTopArtists, setShowTopArtists, showTopArtists, showTopTracks, accessToken }) => {
+const MusicButtons = ( { getTopTracks, setShowTopTracks, getTopArtists, setShowTopArtists, showTopArtists, showTopTracks, accessToken }) => {
     return (
         <div className="musicContainer">
             <button type="button" className="blueButton" id="artistsButton" onClick={() => {getTopArtists(accessToken); setShowTopArtists(!showTopArtists);}}>

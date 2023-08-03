@@ -1,12 +1,15 @@
+// HomePage.js 
 import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
 import './index.css';
 //import embeddedPlayer from './iFrameEmbed';
-import UserInfo from './UserInfo';
-import NewReleases from './NewReleases';
-import TopArtists from './TopArtists';
-import TopTracks from './TopTracks';
-import MusicButtons from './musicButtons';
+import UserInfo from './components/UserInfo';
+import NewReleases from './components/NewReleases';
+import TopArtists from './components/TopArtists';
+import TopTracks from './components/TopTracks';
+import MusicButtons from './components/musicButtons';
+import Playlists from './components/Playlists';
+
 
 
 export const HomePage = () => {
@@ -14,6 +17,7 @@ const [userData, setUserData] = useState(null);
 const [topArtists, setTopArtists] = useState(null);
 const [topTracks, setTopTracks] = useState(null);
 const [newReleasesData, setNewReleases] = useState(null);
+const [playlistData, setPlaylistData] = useState(null);
 const [showTopArtists, setShowTopArtists] = useState(false);
 const [showTopTracks, setShowTopTracks] = useState(false);
 
@@ -34,6 +38,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     const userData = response.data;
     console.log('UserData: ', userData);
     setUserData(userData);
+    getPlaylists(accessToken, userData.id);  // use userID to get playlists
    }    catch (error){
             console.error('Error retrieving user data', error);
             setUserData(null);
@@ -43,7 +48,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
    //embeddedPlayer();
      
   // get users most listened to artists 
-  const getTopArtists = async(accessToken, term) => {
+  const getTopArtists = async(accessToken) => {
     try{
       const response = await axios.get(`https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=10`, {
       headers: {
@@ -93,7 +98,25 @@ const [showTopTracks, setShowTopTracks] = useState(false);
     }
   }
 
-  // get api data when the component mounts
+  // get user playlists
+  const getPlaylists = async (accessToken, user_id) => {
+    try{
+      const response = await axios.get(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
+       headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      const playlistData = response.data;
+      console.log("Playlists: ", playlistData);
+      setPlaylistData(playlistData);
+    } catch(error){
+      console.log("Error getting user playlists: ", error);
+      setPlaylistData(null);
+    }
+  }
+ 
+
+  // get spotify api data when the component mounts
   useEffect(() => {
     if(accessToken) {
       getUserData(accessToken);
@@ -105,55 +128,20 @@ const [showTopTracks, setShowTopTracks] = useState(false);
 
 
   return (
-    <div>
+    <div> {/* conditional render to ensure data is loaded for processing/display */}
       {(userData && newReleasesData && topArtists && topTracks) ? (
-        <>
+        <> {/* pass the props necessary for each component to process/display associated data */}
           <UserInfo userData={userData} />
           <NewReleases newReleasesData={newReleasesData} /> 
           <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
+          <Playlists playlistData={playlistData} />
         </>
-      ) : <p>Loading data...</p>}
+      ) : <p>Loading data...</p>
+    }
     </div>
   );
-
-
-
-
-
-
-
-
-  // return (
-  //   <div>
-  //     {(userData && newReleasesData && topArtists && topTracks) ? (
-  //       <>
-  //         <UserInfo userData={userData} />
-  //         <NewReleases newReleasesData={newReleasesData} /> 
-  //         <div className="musicContainer">
-  //         <button
-  //         type="button"
-  //         className="blueButton"
-  //         id="artistsButton"
-  //         onClick={() => {
-  //           getTopArtists(accessToken);
-  //           setShowTopArtists(!showTopArtists);
-  //         }}
-  //       >
-  //         {showTopArtists ? 'Hide top artists' : 'Show top artists'}
-  //       </button>
-
-  //         <button type="button" className="blueButton" id="tracksButton" onClick={() => {getTopTracks(accessToken); setShowTopTracks(!showTopTracks);}}>
-  //         {showTopTracks ? 'Hide top songs' : 'Show top songs'}
-  //       </button>
-  //       </div>
-  //         <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
-  //         <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
-  //       </>
-  //     ) : <p>Loading data...</p>}
-  //   </div>
-  // );
 
 };
 
