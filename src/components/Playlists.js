@@ -6,6 +6,7 @@ import {React, useState} from 'react';
 const Playlists = ({playlistData, accessToken}) => {
 
     const [tracks, setTracks] = useState(null);
+    const [showTracks, setShowTracks] = useState(false);
 
     const showPlaylistTracks = async(playlistItemsArray) => {
         try{
@@ -38,23 +39,27 @@ const Playlists = ({playlistData, accessToken}) => {
             {/* onclick --> RETREIVE all track ratings from userID */}
             {/* UPDATE/DELETE ratings option (slider for update, button for delete) */}
 
-        {/* shows playlists as clickable <p>playlist names</p> */}
+        {/* shows playlists as clickable <p>playlist names</p>. Update showTracks state */}
         <h1>Rate your playlist tracks: </h1> 
         {playlistData && playlistData.items.length > 0 ? ( 
             playlistData.items.map((playlistItem, index) =>
                 <div key={index}>
-                    <p className="cursor-pointer underline text-blue-500 hover:text-blue-700" onClick={() => showPlaylistTracks(playlistItem)}>{index+1}: {playlistItem.name}</p>
+                    <p className="cursor-pointer underline text-blue-500 hover:text-blue-700" onClick={ () => {showPlaylistTracks(playlistItem); setShowTracks(!showTracks)} }>{index+1}: {playlistItem.name}</p>
                 </div>
             )   
         ) : (<p>You need to add or create a playlist on spotify</p>)}
 
-        {/* after playlist gets clicked, state of tracks updates and tracks get displayed below: */}
-        {tracks && tracks.items.map((trackItemArray,index) =>
+
+        {/* after playlist gets clicked, state of tracks updates and tracks get displayed. 
+        showTracks included in conditional render to allow for showing/hiding of content onClick (where showTracks state changes) */}
+        {showTracks && tracks && tracks.items.map((trackItemArray,index) =>
             <p key={index}>
                <b>{trackItemArray.track.name}</b>
                <p>by {trackItemArray.track.artists[0].name}</p>
             </p>
-            )} 
+        )} 
+
+        
       </div>
     );
 };
