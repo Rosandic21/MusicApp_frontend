@@ -136,7 +136,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
           <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
-          <Playlists playlistData={playlistData} />
+          <Playlists playlistData={playlistData} accessToken={accessToken} />
         </>
       ) : <p>Loading data...</p>
     }

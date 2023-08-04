@@ -45,7 +45,7 @@ code {
 .blueButton:hover {
   background-color: #1D4ED8;
   border-color: #1D4ED8;
-}
+} 
 
 .slider-wrapper {
   background-image: linear-gradient(to right, #150766, #3b82f6);
