@@ -2,6 +2,7 @@
 //import '../index.css'
 import axios from 'axios';
 import {React, useState} from 'react';
+import RatingComponent from './RatingComponent'; // shows 1-5 stars for users to rate tracks
 
 const Playlists = ({playlistData, accessToken}) => {
 
@@ -56,10 +57,11 @@ const Playlists = ({playlistData, accessToken}) => {
             <p key={index}>
                <b>{trackItemArray.track.name}</b>
                <p>by {trackItemArray.track.artists[0].name}</p>
+               <RatingComponent />
             </p>
         )} 
 
-        
+
       </div>
     );
 };
