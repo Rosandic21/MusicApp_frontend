@@ -4,7 +4,7 @@ import axios from 'axios';
 import {React, useState} from 'react';
 import RatingComponent from './RatingComponent'; // shows 1-5 stars for users to rate tracks
 
-const Playlists = ({playlistData, accessToken}) => {
+const Playlists = ({playlistData, accessToken, userID}) => {
 
     const [tracks, setTracks] = useState(null);
     const [showTracks, setShowTracks] = useState(false);
@@ -54,11 +54,12 @@ const Playlists = ({playlistData, accessToken}) => {
         {/* after playlist gets clicked, state of tracks updates and tracks get displayed. 
         showTracks included in conditional render to allow for showing/hiding of content onClick (where showTracks state changes) */}
         {showTracks && tracks && tracks.items.map((trackItemArray,index) =>
-            <p key={index}>
+            <div key={index}>
                <b>{trackItemArray.track.name}</b>
                <p>by {trackItemArray.track.artists[0].name}</p>
-               <RatingComponent />
-            </p>
+               <RatingComponent userID={userID} musicID={trackItemArray.track.external_urls.spotify} title={trackItemArray.track.name} artist={trackItemArray.track.artists[0].name}/>
+               {/*<RatingComponent /> */}
+            </div>
         )} 
 
 

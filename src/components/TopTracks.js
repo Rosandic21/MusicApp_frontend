@@ -1,4 +1,4 @@
-// TopTracks.js
+// TopTracks.js: shows users top tracks with the corresponding artist 
 import React from 'react';
 
 const TopTracks = ({ showTopTracks, topTracks  }) => {

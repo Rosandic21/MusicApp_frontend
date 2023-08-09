@@ -9,6 +9,7 @@ import TopArtists from './components/TopArtists';
 import TopTracks from './components/TopTracks';
 import MusicButtons from './components/musicButtons';
 import Playlists from './components/Playlists';
+import ModifyRatings from './components/ModifyRatings';
 
 
 
@@ -136,7 +137,9 @@ const [showTopTracks, setShowTopTracks] = useState(false);
           <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
-          <Playlists playlistData={playlistData} accessToken={accessToken} />
+          <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
+          {/* <Playlists playlistData={playlistData} accessToken={accessToken}/> */}
+          < ModifyRatings userID={userData.id}/>
         </>
       ) : <p>Loading data...</p>
     }

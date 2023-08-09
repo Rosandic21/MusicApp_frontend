@@ -1,9 +1,20 @@
 /* RatingComponent.js: used in Playlists.js to allow users to rate 
  tracks from 1-5 stars and issue CRUD commands to DB with those ratings */
 
-import React, { useState, useEffect } from 'react';
 
-const RatingComponent = () => {
+
+ /**************TODO: Update crud functions to handle edge cases (like if)  **********************/
+/*                   Handle edge cases (this may need to be done in authRoutes instead or aswell)  
+                    1. on insertion: check that no row with matching userID + musicID exists and if it exists then issue UPDATE instead
+                    2. prepared statements?
+*/
+
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const RatingComponent = ({ userID, musicID, title, artist }) => {
   // State to track the selected rating (1-5 stars)
   const [rating, setRating] = useState(0);
 
@@ -38,22 +49,26 @@ const RatingComponent = () => {
   };
 
   // Function to handle the submit button click
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('Selected Rating:', rating);
   
-    // ***** TODO: get the userID and the music ID *************************/
-    // try {
-    //   // Send rating to backend
-    //   await axios.post('/api/ratings', {
-    //     userID: userID goes here, // Replace with actual user ID
-    //     musicID,
-    //     rating: rating,
-    //   })
-    //    setIsSubmitted(true); // Set submission status to true
-    //  } catch(error){
-    //     console.log("Error sending data ")
-    //   }
-//**************************************************************************/
+  
+    try {
+      // Send rating to backend
+      const response = await axios.post('http://localhost:5000/ratings', {
+        //action: 'create',
+        userID: userID, 
+        musicID: musicID,
+        rating: rating,
+        title: title,
+        artist: artist,
+      })
+      if (response.status === 200) {
+        setIsSubmitted(true); // Set submission status to true
+      }
+     } catch(error){
+        console.log("Error sending data ", error);
+      }
 
 
 
