@@ -97,3 +97,9 @@ code {
   height: auto;
   border-radius: 8px;
 }
+
+tr td {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}

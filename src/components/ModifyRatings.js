@@ -4,50 +4,11 @@
 -- Get request is processed in handleRatingRequest.js backend module 
 */
 
-import React from 'react'
+import {React,useState} from 'react'
 import axios from 'axios'
-
-// const retrieveRatings = (userID) => {
-//     // Send GET request for saved ratings to backend
-//     try{
-        
-//         //const response = axios.get('http://localhost:5000/getRatings/userID', {
-//             const response = axios.get('http://localhost:5000/getRatings/' + userID, {
-//             params: {
-//                 userID: userID
-//             }
-//         })
-//         console.log(response.data); 
-//     } catch (error) {
-//         console.error('Error retrieving ratings:', error);
-//     }
-// }
-
+import '../index.css'
 
 const retrieveRatings = (userID) => {
-//     // Send GET request for saved ratings to backend
-//     try {
-//         // Send GET request to the server
-//         axios.get('http://localhost:5000/getRatings/' + userID)
-//             .then(response => {
-//                 // Handle the response data here
-//                 const data = response.data;
-//                 console.log(data);
-
-//                 // Update the UI with the retrieved data
-//                 const ratingDiv = document.getElementById('ratings');
-//                 ratingDiv.innerHTML = `
-//                     <p>Title: ${data.title}</p>
-//                     <p>Artist: ${data.artist}</p>
-//                     <p>Rating: ${data.rating}</p>
-//                 `;
-//             }).catch(error => {
-//                 console.error('Error retrieving ratings:', error)});
-//     } catch (error) {
-//         console.error('Error:', error);
-//     }
-// }
-
 try {
     // Send GET request to the server
     axios.get('http://localhost:5000/getRatings/' + userID)
@@ -58,17 +19,20 @@ try {
 
             // Update the UI with the retrieved data
             const ratingDiv = document.getElementById('ratings');
-            let html = '';
-
-            // Loop through the result array and generate HTML for each rating
-            result.forEach(rating => {
+            let html = `<table>
+            <th>Title</th> <th>Artist</th> <th>Rating</th>`;            
+              result.forEach(rating => {
                 html += `
-                    <p>Title: ${rating.title}</p>
-                    <p>Artist: ${rating.artist}</p>
-                    <p>Rating: ${rating.rating}</p>
+                <tr>
+                    <td>${rating.title}</td>
+                    <td>${rating.artist}</td>
+                    <td>${rating.rating}</td>
+                    <td><button id="edit" type="button" class="ml-5 px-2 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">EDIT</button></td>
+                    <td><button id="delete" type="button" class="px-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">DEL</button></td>
+                </tr>
                 `;
             });
-
+              html+=`</table>`
             ratingDiv.innerHTML = html;
         }).catch(error => {
             console.error('Error retrieving ratings:', error)});
@@ -79,13 +43,13 @@ try {
 
 
 
-const ModifyRatings = ({ userID }) => {
-    
 
+const ModifyRatings = ({ userID }) => {
+    const [showRatings, setShowRatings] = useState(true);
     return (
         <div>
-            <button onClick={()=> retrieveRatings(userID)}>Saved ratings</button>
-            <div id='ratings'></div>
+            <button onClick={()=> {retrieveRatings(userID); setShowRatings(!showRatings)} }>{showRatings ? 'Display saved ratings' : 'Minimize'}</button>
+            <div id='ratings'className={`mt-4 ${showRatings ? 'invisible' : 'visible'}`}></div> 
         </div>
     )
 }

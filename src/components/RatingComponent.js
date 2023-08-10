@@ -51,13 +51,12 @@ const RatingComponent = ({ userID, musicID, title, artist }) => {
   // Function to handle the submit button click
   const handleSubmit = async () => {
     console.log('Selected Rating:', rating);
-  
+    const uID = userID; // renaming of variable to avoid conflict with reuse
   
     try {
       // Send rating to backend
       const response = await axios.post('http://localhost:5000/ratings', {
-        //action: 'create',
-        userID: userID, 
+        uID: uID, 
         musicID: musicID,
         rating: rating,
         title: title,
