@@ -45,6 +45,30 @@ function ModifyRatings({ userID }) {
         retrieveRatings(userID);
     }, [userID]);
 
+    async function handleDeleteButtonClick(userID, musicID) {
+       // const delUserID = userID;
+       // const delMusicID = musicID;
+        try {
+            const response = await axios.delete('http://localhost:5000/delRatings', {
+                data: {
+                    delUserID: userID,
+                    delMusicID: musicID
+                }
+            });
+
+            if (response.status === 200) {
+                console.log('Rating deleted successfully');
+                // Refresh ratings after delete
+                retrieveRatings(userID);
+            }
+        } catch (error) {
+            console.error('Error deleting rating:', error);
+        }
+    }
+
+
+
+
     return (
         <div>
             <button onClick={() => { retrieveRatings(userID); setShowRatings(!showRatings) }}>
@@ -66,8 +90,8 @@ function ModifyRatings({ userID }) {
                                     <button className="up-arrow" onClick={() => adjustRating(index, 1)}>▲</button>
                                     <button className="down-arrow" onClick={() => adjustRating(index, -1)}>▼</button>
                                 </td>
-                                <td><button className="edit-button" type="button" onClick={(event) => handleEditButtonClick(event, index,userID)}>EDIT</button></td>
-                                <td><button className="delete-button" type="button">DEL</button></td>
+                                <td><button className="edit-button" type="button" onClick={(event) => handleEditButtonClick(event, index, userID)}>EDIT</button></td>
+                                <td><button className="delete-button" type="button" onClick={() => handleDeleteButtonClick(userID, rating.musicID)}>DEL</button></td>
                             </tr>
                         ))}
                     </tbody>
