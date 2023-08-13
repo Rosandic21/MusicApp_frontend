@@ -1,15 +1,5 @@
 /* RatingComponent.js: used in Playlists.js to allow users to rate 
- tracks from 1-5 stars and issue CRUD commands to DB with those ratings */
-
-
-
- /**************TODO: Update crud functions to handle edge cases (like if)  **********************/
-/*                   Handle edge cases (this may need to be done in authRoutes instead or aswell)  
-                    1. on insertion: check that no row with matching userID + musicID exists and if it exists then issue UPDATE instead
-                    2. prepared statements?
-*/
-
-
+ tracks from 1-5 stars and issue POST request to DB with those ratings */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -68,9 +58,6 @@ const RatingComponent = ({ userID, musicID, title, artist }) => {
      } catch(error){
         console.log("Error sending data ", error);
       }
-
-
-
   };
 
   return (

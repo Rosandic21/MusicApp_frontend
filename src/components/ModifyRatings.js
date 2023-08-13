@@ -5,6 +5,8 @@ import '../index.css';
 function ModifyRatings({ userID }) {
     const [showRatings, setShowRatings] = useState(true);
     const [ratings, setRatings] = useState([]);
+    const [ratingEdited, setRatingEdited] = useState(false);
+    const [ratingDeleted, setRatingDeleted] = useState(false);
 
     async function adjustRating(index, increment) {
         const newRatings = [...ratings];
@@ -26,6 +28,10 @@ function ModifyRatings({ userID }) {
 
             if (response.status === 200) {
                 console.log('\nUpdated track rating\n');
+                setRatingEdited(true);
+                setTimeout(() => {
+                    setRatingEdited(false);
+                }, 2500); // Set a timeout to reset the state after 3 seconds
             }
         } catch (error) {
             console.log('Error sending data', error);
@@ -56,16 +62,16 @@ function ModifyRatings({ userID }) {
 
             if (response.status === 200) {
                 console.log('Rating deleted successfully');
-                // Refresh ratings after delete
-                retrieveRatings(userID);
+                retrieveRatings(userID); // Refresh ratings after delete
+                setRatingDeleted(true);
+                setTimeout(()=>{ // wait 2.5s to reset the state (gives time to display "Rating deleted" msg for 2.5s)
+                    setRatingDeleted(false);
+                },2500) 
             }
         } catch (error) {
             console.error('Error deleting rating:', error);
         }
     }
-
-
-
 
     return (
         <div>
@@ -73,6 +79,8 @@ function ModifyRatings({ userID }) {
                 {showRatings ? 'Display saved ratings' : 'Minimize'}
             </button>
             <div id='ratings' className={`mt-4 ${showRatings ? 'invisible' : 'visible'}`}>
+            {ratingEdited && <p className="rating-updated text-green-500 text-center text-2xl">Rating Updated!</p>} {/* when a rating gets updated using the edit-button this p-tag gets displayed at top of table */}
+            {ratingDeleted && <p className="rating-deleted text-green-500 text-center text-2xl">Rating Deleted!</p>} {/* display msg when rating is deleted using the delete-button */}
                 <table>
                     <thead>
                         <th>Title</th> <th>Artist</th> <th>Rating</th>
@@ -88,7 +96,7 @@ function ModifyRatings({ userID }) {
                                     <button className="up-arrow" onClick={() => adjustRating(index, 1)}>▲</button>
                                     <button className="down-arrow" onClick={() => adjustRating(index, -1)}>▼</button>
                                 </td>
-                                <td><button className="edit-button" type="button" onClick={(event) => handleEditButtonClick(event, index, userID)}>EDIT</button></td>
+                                <td><button className="edit-button" type="button" onClick={(event) => handleEditButtonClick(event, index, userID)}>UPDATE</button></td>
                                 <td><button className="delete-button" type="button" onClick={() => handleDeleteButtonClick(userID, rating.musicID)}>DEL</button></td>
                             </tr>
                         ))}

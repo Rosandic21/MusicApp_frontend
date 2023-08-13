@@ -125,6 +125,8 @@ const [showTopTracks, setShowTopTracks] = useState(false);
       getTopArtists(accessToken);
       getTopTracks(accessToken);
     }
+    // disable warning for getUserData missing in dependency array (UserData should never change past first render):
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]); // re-render if accessToken changes state
 
 
@@ -138,7 +140,6 @@ const [showTopTracks, setShowTopTracks] = useState(false);
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
           <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
-          {/* <Playlists playlistData={playlistData} accessToken={accessToken}/> */}
           < ModifyRatings userID={userData.id}/>
         </>
       ) : <p>Loading data...</p>
