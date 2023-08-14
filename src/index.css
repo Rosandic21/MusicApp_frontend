@@ -19,8 +19,8 @@ code {
 @import '~slick-carousel/slick/slick.css';
 @import '~slick-carousel/slick/slick-theme.css';
 
-#introText {
-  @apply text-3xl font-bold text-indigo-600 mb-4;
+.introText {
+  @apply text-3xl font-bold text-indigo-600;
 }
 
 .musicContainer {
@@ -48,11 +48,11 @@ code {
 } 
 
 .slider-wrapper {
-  background-image: linear-gradient(to right, #150766, #3b82f6);
+  background-image: linear-gradient(to right, #310ef7, #6fa6ff);
   width: 80%;
   margin: 0 auto;
   padding: 30px;
-  border: 1px solid #e2e8f0;
+  border: 10px solid #2a77eb;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transform: translateY(40px);
 }
@@ -63,32 +63,18 @@ code {
 }
 
 .slider-wrapper .slick-prev {
-  left: -10px;
+  left: -25px;
 }
 
 .slider-wrapper .slick-next {
-  right: -10px;
+  right: -25px;
 }
-
-/* .pShadow {
-  @apply inline-block py-3 px-4 bg-blue-100 text-black font-bold rounded;
-  animation: pulse 1s infinite alternate;
-}
-
-@keyframes pulse {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.5;
-  }
-} */
 
 .release-card {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: rgb(174, 243, 243);
+  background-color: rgb(40, 17, 146);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -102,4 +88,8 @@ tr td {
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.homepage {
+  background: linear-gradient(-45deg, rgb(253, 184, 255), rgb(175, 157, 241))
 }

@@ -2,7 +2,6 @@
 import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
 import './index.css';
-//import embeddedPlayer from './iFrameEmbed';
 import UserInfo from './components/UserInfo';
 import NewReleases from './components/NewReleases';
 import TopArtists from './components/TopArtists';
@@ -10,8 +9,6 @@ import TopTracks from './components/TopTracks';
 import MusicButtons from './components/musicButtons';
 import Playlists from './components/Playlists';
 import ModifyRatings from './components/ModifyRatings';
-
-
 
 export const HomePage = () => {
 const [userData, setUserData] = useState(null);
@@ -45,8 +42,6 @@ const [showTopTracks, setShowTopTracks] = useState(false);
             setUserData(null);
         }
    };
-
-   //embeddedPlayer();
      
   // get users most listened to artists 
   const getTopArtists = async(accessToken) => {
@@ -131,10 +126,18 @@ const [showTopTracks, setShowTopTracks] = useState(false);
 
 
   return (
-    <div> {/* conditional render to ensure data is loaded for processing/display */}
+    <div className="homepage"> 
+      {/* conditional render to ensure data is loaded for processing/display */}
       {(userData && newReleasesData && topArtists && topTracks) ? (
         <> {/* pass the props necessary for each component to process/display associated data */}
           <UserInfo userData={userData} />
+          <div className="welcome_border border-solid border-6 border rounded-full border-sky-600 ml-2 mr-2 bg-gradient-to-r from-pink-500 to-violet-500">
+            <p className="welcome_msg ml-7 mr-5 mt-2 mb-2 text-white"> Welcome to SonicStudios! This site uses data associated with your spotify to offer you a number of features
+                spotify doesn't give you access to. Here, we keep an up to date list of brand new music releases, allow you to see 
+                your most listened to artists and songs, and we even let you save lists of how you rate each song on your playlists. 
+                SonicStudios gives you more ways to express how you enjoy music!
+            </p>
+          </div>
           <NewReleases newReleasesData={newReleasesData} /> 
           <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />

@@ -4,7 +4,7 @@ import React from 'react';
 const UserInfo = ({ userData }) => {
   return (
     <>
-      <p id="introText">Hello, {userData.display_name}!</p>
+      <p className="introText mb-4 ml-1">Hello, {userData.display_name}!</p>
     </>
   );
 };
