@@ -3,7 +3,7 @@ import React from 'react';
 import '../index.css';
 const TopTracks = ({ showTopTracks, topTracks  }) => {
   return (
-    <div className="show_top_tracks mt-10 text-slate-300">
+    <div className="show_top_tracks mt-10 text-slate-300 drop_down_text">
       {showTopTracks && topTracks && topTracks.items.length > 0 ? (
         topTracks.items.map((track, index) => (
           <div key={index}>

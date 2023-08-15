@@ -111,3 +111,42 @@ tr td {
 .show_top_tracks{
   animation: slide-in 1s;
 } */
+
+@keyframes slide-down {
+  0% {
+    opacity: 0; 
+  }
+  100% {
+    opacity: 1; 
+  }
+
+  from{
+    transform: translateY(-100%);
+  }
+  to{
+    transform: translateY(0%);
+  }
+}
+
+.drop_down_text {
+  animation: slide-down 2s ease-in 1s;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  from{
+    transform:translateX(-10%);
+  }
+  to {
+    transform:translateX(0%);
+  }
+}
+
+.slide_in_text {
+  animation: slide-in 2s ease-in;
+}

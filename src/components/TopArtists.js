@@ -4,7 +4,7 @@ import '../index.css';
 
 const TopArtists = ({ showTopArtists, setShowTopArtists, topArtists, getTopArtists, accessToken }) => {
   return (
-    <div className="flex space-x-8 mt-10">
+    <div className="flex space-x-8 mt-10 drop_down_text">
       {showTopArtists && topArtists && topArtists.items.length > 0 && (
         topArtists.items.map((artist, index) => (
           <div className="flex flex-col items-center align-items-start mt-auto" key={index}>
