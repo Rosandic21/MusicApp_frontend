@@ -116,6 +116,14 @@ tr td {
   animation: slide-in 2s ease-in;
 }
 
+.bounce_button {
+  animation:
+  bounce 400ms
+  alternate 
+  infinite
+  linear
+}
+
 @keyframes slide-down {
   0% {
     opacity: 0; 
@@ -146,3 +154,13 @@ tr td {
     transform:translateX(0%);
   }
 }
+
+@keyframes bounce {
+  from {
+  transform: translateY(0px);
+  }
+  to {
+  transform: translateY(-15px);
+  }
+}
+
