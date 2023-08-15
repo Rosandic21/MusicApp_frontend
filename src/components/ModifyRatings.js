@@ -80,10 +80,10 @@ function ModifyRatings({ userID }) {
             <button onClick={() => { retrieveRatings(userID); setShowRatings(!showRatings) }}>
                 {showRatings ? 
                     <p className="text-white text-xl w-60 border-solid border-6 border rounded-full border-sky-600 
-                    ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500 mt-10">Display saved ratings</p> 
+                    bg-gradient-to-r from-pink-500 to-violet-500">Display saved ratings</p> 
                     : 
                     <p className="text-white text-xl w-60 border-solid border-6 border rounded-full border-sky-600 
-                    ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500 mt-10">Minimize</p>}
+                    bg-gradient-to-r from-pink-500 to-violet-500">Minimize</p>}
             </button>
             <div id='ratings' className={`mt-4 ${showRatings ? 'invisible' : 'visible'}`}>
             {ratingEdited && <p className="rating-updated text-green-500 text-center text-2xl">Rating Updated!</p>} {/* when a rating gets updated using the edit-button this p-tag gets displayed at top of table */}

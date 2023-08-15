@@ -30,11 +30,11 @@ const Playlists = ({playlistData, accessToken, userID}) => {
         {/* shows playlists as clickable <p>playlist names</p>. Update showTracks state */}
             <div className="flex">
                 <div className="showPlaylists w-50 flex-col align-items-start">
-                    <h1 className="mt-20 mb-2 text-xl text-white w-60 border-solid border-6 border rounded-full border-sky-600 ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500"> Rate your playlist tracks</h1> 
+                    <h1 className="text-xl text-white w-60 border-solid border-6 border rounded-full border-sky-600 ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500"> Rate your playlist tracks</h1> 
                     {playlistData && playlistData.items.length > 0 ? ( 
                         playlistData.items.map((playlistItem, index) =>
                             <div key={index}>
-                                <p className="ml-4 font-semibold cursor-pointer underline text-blue-500 hover:text-blue-700" onClick={ () => {showPlaylistTracks(playlistItem); setShowTracks(!showTracks)} }>{index+1}: {playlistItem.name}</p>
+                                <p className="ml-4 font-semibold cursor-pointer underline text-blue-600 hover:text-blue-900" onClick={ () => {showPlaylistTracks(playlistItem); setShowTracks(!showTracks)} }>{index+1}: {playlistItem.name}</p>
                             </div>
                         )   
                     ) : (<p>You need to add or create a playlist on spotify</p>)}

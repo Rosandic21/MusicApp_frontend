@@ -126,24 +126,30 @@ const [showTopTracks, setShowTopTracks] = useState(false);
 
 
   return (
-    <div className="homepage"> 
+    <div> 
       {/* conditional render to ensure data is loaded for processing/display */}
       {(userData && newReleasesData && topArtists && topTracks) ? (
         <> {/* pass the props necessary for each component to process/display associated data */}
-          <UserInfo userData={userData} />
-          <div className="welcome_border border-solid border-6 border rounded-full border-sky-600 ml-2 mr-2 bg-gradient-to-r from-pink-500 to-violet-500">
-            <p className="welcome_msg ml-7 mr-5 mt-2 mb-2 text-white"> Welcome to SonicStudios! This site uses data associated with your spotify to offer you a number of features
-                spotify doesn't give you access to. Here, we keep an up to date list of brand new music releases, allow you to see 
-                your most listened to artists and songs, and we even let you save lists of how you rate each song on your playlists. 
-                SonicStudios gives you more ways to express how you enjoy music!
-            </p>
+          <div className="homepage_top pb-10">
+            <UserInfo userData={userData} />
+            <div className="welcome_border border-solid border-6 border rounded-full border-sky-600 ml-2 mr-2 bg-gradient-to-r from-pink-500 to-violet-500">
+              <p className="welcome_msg ml-7 mr-5 mt-2 mb-2 text-white"> Welcome to SonicStudios! This site uses data associated with your spotify to offer you a number of features
+                  spotify doesn't give you access to. Here, we keep an up to date list of brand new music releases, allow you to see 
+                  your most listened to artists and songs, and we even let you save lists of how you rate each song on your playlists. 
+                  SonicStudios gives you more ways to express how you enjoy music!
+              </p>
+            </div>
+            <NewReleases newReleasesData={newReleasesData} /> 
+            <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
+            <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
+            <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
           </div>
-          <NewReleases newReleasesData={newReleasesData} /> 
-          <MusicButtons getTopTracks={getTopTracks} setShowTopTracks={setShowTopTracks} getTopArtists={getTopArtists} setShowTopArtists={setShowTopArtists} showTopArtists={showTopArtists} showTopTracks={showTopTracks} accessToken={accessToken}  />
-          <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
-          <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
-          <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
-          <ModifyRatings userID={userData.id}/>
+          <div className="homepage_middle pb-5 pt-5">
+            <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
+          </div>
+          <div className="homepage_bottom pt-5 pl-2">
+            <ModifyRatings userID={userData.id}/>
+          </div>
         </>
       ) : <p>Loading data...</p>
     }
