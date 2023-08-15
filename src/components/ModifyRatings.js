@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../index.css';
 
 function ModifyRatings({ userID }) {
-    const [showRatings, setShowRatings] = useState(true);
+    const [showRatings, setShowRatings] = useState(false);
     const [ratings, setRatings] = useState([]);
     const [ratingEdited, setRatingEdited] = useState(false);
     const [ratingDeleted, setRatingDeleted] = useState(false);
@@ -31,7 +31,7 @@ function ModifyRatings({ userID }) {
                 setRatingEdited(true);
                 setTimeout(() => {
                     setRatingEdited(false);
-                }, 2500); // Set a timeout to reset the state after 3 seconds
+                }, 2500); // Set a timeout to reset the state after 2.5 seconds
             }
         } catch (error) {
             console.log('Error sending data', error);
@@ -88,7 +88,7 @@ function ModifyRatings({ userID }) {
             <div id='ratings' className={`mt-4 ${showRatings ? 'invisible' : 'visible'}`}>
             {ratingEdited && <p className="rating-updated text-green-500 text-center text-2xl">Rating Updated!</p>} {/* when a rating gets updated using the edit-button this p-tag gets displayed at top of table */}
             {ratingDeleted && <p className="rating-deleted text-green-500 text-center text-2xl">Rating Deleted!</p>} {/* display msg when rating is deleted using the delete-button */}
-                <table className="text-white border-collapse border border-gray-300">
+                <table className="text-white border-collapse border border-gray-300 bg-indigo-700">
                     <thead className="text-l border-b-2">
                         <th className="p-2">Title</th> <th className="p-2">Artist</th> <th className="p-2">Rating</th>
                     </thead>

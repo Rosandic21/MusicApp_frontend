@@ -9,6 +9,7 @@ import TopTracks from './components/TopTracks';
 import MusicButtons from './components/musicButtons';
 import Playlists from './components/Playlists';
 import ModifyRatings from './components/ModifyRatings';
+import ContactUs from './components/ContactForm';
 
 export const HomePage = () => {
 const [userData, setUserData] = useState(null);
@@ -18,6 +19,7 @@ const [newReleasesData, setNewReleases] = useState(null);
 const [playlistData, setPlaylistData] = useState(null);
 const [showTopArtists, setShowTopArtists] = useState(false);
 const [showTopTracks, setShowTopTracks] = useState(false);
+const [emailSent, setEmailSent]= useState(false); // passed as a prop for use in ContactForm.js 
 
     // Parse URL for accessToken, time accessToken expires, and refreshToken.
    const queryParams = new URLSearchParams(window.location.search)
@@ -147,8 +149,16 @@ const [showTopTracks, setShowTopTracks] = useState(false);
           <div className="homepage_middle pb-5 pt-5">
             <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
           </div>
-          <div className="homepage_bottom pt-5 pl-2">
-            <ModifyRatings userID={userData.id}/>
+          <div className="homepage_bottom flex justify-between">
+            <div className="pt-5 pl-2 pb-3">
+              <ModifyRatings userID={userData.id}/>
+            </div>
+            <div className="msg">
+              {emailSent && <p className="absolute text-2xl ml-20 mt-5 font-bold text-white">Message sent!</p>} {/* display 'Message sent' after email is sent */}
+              <div className="p-2 m-20 border-2 bg-indigo-700">
+                <ContactUs emailSent={emailSent} setEmailSent={setEmailSent}/>
+              </div>
+            </div>
           </div>
         </>
       ) : <p>Loading data...</p>

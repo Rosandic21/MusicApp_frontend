@@ -42,9 +42,9 @@ const Playlists = ({playlistData, accessToken, userID}) => {
 
                 {/* after playlist gets clicked, state of tracks updates and tracks get displayed. 
                 showTracks included in conditional render to allow for showing/hiding of content onClick (where showTracks state changes) */}
-                {/* display playlist tracks when user clicks on playlist: */}
+                {/* display playlist tracks for rating when user clicks on playlist: */}
                 {showTracks && tracks && ( // only display div className="showTracks" when tracks are actually displayed.
-                <div className="showTracks bg-blue-400 border-2 border-grey-500 w-50 max-h-96 overflow-y-auto flex-col items-center mt-20 ml-20 mr-4 p-4">
+                <div className="showTracks bg-blue-400 border-2 border-grey-500 w-50 max-h-96 overflow-y-auto flex-col items-center ml-20 mr-4 p-4">
                     {showTracks && tracks && tracks.items.map((trackItemArray,index) =>
                         <div className="ratingBox bg-sky-200 border-2 mt-2"key={index}>
                             <b>{trackItemArray.track.name}</b>
