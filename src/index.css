@@ -20,7 +20,7 @@ code {
 @import '~slick-carousel/slick/slick-theme.css';
 
 .introText {
-  @apply text-3xl font-bold text-indigo-600;
+  @apply text-3xl font-bold text-slate-200;
 }
 
 .musicContainer {
@@ -90,6 +90,24 @@ tr td {
   padding-right: 10px;
 }
 
+/* .homepage {
+  background: linear-gradient(-45deg, rgb(253, 184, 255), rgb(175, 157, 241));
+} */
+
 .homepage {
-  background: linear-gradient(-45deg, rgb(253, 184, 255), rgb(175, 157, 241))
+  background: rgb(11,36,59);
 }
+
+/* 
+@keyframes slide-in {
+  from{
+    transform: translateX(-100%);
+  }
+  to{
+    transform: translateX(0%);
+  }
+}
+
+.show_top_tracks{
+  animation: slide-in 1s;
+} */

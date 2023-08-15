@@ -143,7 +143,7 @@ const [showTopTracks, setShowTopTracks] = useState(false);
           <TopArtists showTopArtists={showTopArtists} topArtists={topArtists} />
           <TopTracks showTopTracks={showTopTracks} topTracks={topTracks} />
           <Playlists playlistData={playlistData} accessToken={accessToken} userID={userData.id}/>
-          < ModifyRatings userID={userData.id}/>
+          <ModifyRatings userID={userData.id}/>
         </>
       ) : <p>Loading data...</p>
     }

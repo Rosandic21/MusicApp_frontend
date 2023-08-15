@@ -38,6 +38,7 @@ function ModifyRatings({ userID }) {
         }
     }
 
+    // get req for ratings stored in DB 
     async function retrieveRatings(userID) {
         try {
             const response = await axios.get('http://localhost:5000/getRatings/' + userID);
@@ -74,16 +75,22 @@ function ModifyRatings({ userID }) {
     }
 
     return (
-        <div>
+        <div>  
+            {/* show/hide saved ratings */}
             <button onClick={() => { retrieveRatings(userID); setShowRatings(!showRatings) }}>
-                {showRatings ? 'Display saved ratings' : 'Minimize'}
+                {showRatings ? 
+                    <p className="text-white text-xl w-60 border-solid border-6 border rounded-full border-sky-600 
+                    ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500 mt-10">Display saved ratings</p> 
+                    : 
+                    <p className="text-white text-xl w-60 border-solid border-6 border rounded-full border-sky-600 
+                    ml-1 pl-2 bg-gradient-to-r from-pink-500 to-violet-500 mt-10">Minimize</p>}
             </button>
             <div id='ratings' className={`mt-4 ${showRatings ? 'invisible' : 'visible'}`}>
             {ratingEdited && <p className="rating-updated text-green-500 text-center text-2xl">Rating Updated!</p>} {/* when a rating gets updated using the edit-button this p-tag gets displayed at top of table */}
             {ratingDeleted && <p className="rating-deleted text-green-500 text-center text-2xl">Rating Deleted!</p>} {/* display msg when rating is deleted using the delete-button */}
-                <table>
-                    <thead>
-                        <th>Title</th> <th>Artist</th> <th>Rating</th>
+                <table className="text-white border-collapse border border-gray-300">
+                    <thead className="text-l border-b-2">
+                        <th className="p-2">Title</th> <th className="p-2">Artist</th> <th className="p-2">Rating</th>
                     </thead>
                     <tbody>
                         {ratings.map((rating, index) => (

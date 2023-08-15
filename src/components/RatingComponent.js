@@ -83,7 +83,7 @@ const RatingComponent = ({ userID, musicID, title, artist }) => {
       </button>
       {/* Show "Rating submitted!" message */}
       {showMessage && (
-        <p className="ml-2 text-green-500">Rating submitted!</p>
+        <p className="ml-2 text-green-800">Rating submitted!</p>
       )}
     </div>
   );
