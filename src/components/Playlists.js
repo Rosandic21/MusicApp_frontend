@@ -1,14 +1,21 @@
 // Playlists.js 
-//import '../index.css'
 import axios from 'axios';
 import {React, useState} from 'react';
 import RatingComponent from './RatingComponent'; // shows 1-5 stars for users to rate tracks
 
+/**
+ * UI to display users playlists
+ * @param {object} playlistData - state containing user's Spotify playlists
+ * @param {string} accessToken - accessToken used to make requests to Spotify API
+ * @param {string} userID - unique user ID 
+ * @returns - Playlists React component
+ */
 const Playlists = ({playlistData, accessToken, userID}) => {
 
-    const [tracks, setTracks] = useState(null);
+    const [tracks, setTracks] = useState(null); 
     const [showTracks, setShowTracks] = useState(false);
 
+    // fetch tracks contained in user's playlist
     const showPlaylistTracks = async(playlistItemsArray) => {
         try{
             const response = await axios.get(playlistItemsArray.tracks.href, {
@@ -47,9 +54,9 @@ const Playlists = ({playlistData, accessToken, userID}) => {
                 <div className="showTracks bg-blue-400 border-2 border-grey-500 w-50 max-h-96 overflow-y-auto flex-col items-center ml-20 mr-4 p-4">
                     {showTracks && tracks && tracks.items.map((trackItemArray,index) =>
                         <div className="ratingBox bg-sky-200 border-2 mt-2"key={index}>
-                            <b>{trackItemArray.track.name}</b>
-                            <p>by {trackItemArray.track.artists[0].name}</p>
-                            <RatingComponent userID={userID} musicID={trackItemArray.track.external_urls.spotify} title={trackItemArray.track.name} artist={trackItemArray.track.artists[0].name}/>
+                            <b>{trackItemArray.track.name}</b> {/* display track name */}
+                            <p>by {trackItemArray.track.artists[0].name}</p> {/* display artist name */}
+                            <RatingComponent userID={userID} musicID={trackItemArray.track.external_urls.spotify} title={trackItemArray.track.name} artist={trackItemArray.track.artists[0].name}/> {/* pass props needed for creating ratings to RatingComponent */}
                         </div>
                     )} 
                 </div>

@@ -1,6 +1,11 @@
 // UserInfo.js
 import React from 'react';
 
+/**
+ * Prints user's display name with a welcome msg
+ * @param {object} userData - object from Spotify Api containing user data, such as display name
+ * @returns {JSX.Element} - UserInfo React component 
+ */
 const UserInfo = ({ userData }) => {
   return (
     <>

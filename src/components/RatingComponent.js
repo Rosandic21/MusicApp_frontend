@@ -1,9 +1,17 @@
-/* RatingComponent.js: used in Playlists.js to allow users to rate 
- tracks from 1-5 stars and issue POST request to DB with those ratings */
+/* RatingComponent.js: used in Playlists.js - allows user to create ratings */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+/**
+ * Allow users to rate tracks from 1-5 stars and issue POST request to DB with those ratings
+ * @param {string} userID - ID of user making the rating
+ * @param {string} musicID - track ID to be rated
+ * @param {string} title - name of track to be rated
+ * @param {string} artist - name of artist to be rated
+ * @returns {JSX.Element} the RatingComponent React component
+ */
 const RatingComponent = ({ userID, musicID, title, artist }) => {
   // State to track the selected rating (1-5 stars)
   const [rating, setRating] = useState(0);

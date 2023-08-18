@@ -1,4 +1,5 @@
-// HomePage.js 
+// HomePage.js: Displays Home page UI and gets core data used in various modules
+
 import {React, useState, useEffect} from 'react';
 import axios from 'axios'; 
 import './index.css';
@@ -24,8 +25,6 @@ const [emailSent, setEmailSent]= useState(false); // passed as a prop for use in
     // Parse URL for accessToken, time accessToken expires, and refreshToken.
    const queryParams = new URLSearchParams(window.location.search)
    const accessToken = queryParams.get("access_token")
-   //const expires_in = queryParams.get("expires_in")
-   //const refresh_token = queryParams.get("refresh_token")
 
   // retrieval of user data
    const getUserData = async (accessToken) => {
@@ -96,7 +95,7 @@ const [emailSent, setEmailSent]= useState(false); // passed as a prop for use in
     }
   }
 
-  // get user playlists
+  // fetch user playlists
   const getPlaylists = async (accessToken, user_id) => {
     try{
       const response = await axios.get(`https://api.spotify.com/v1/users/${user_id}/playlists`, {

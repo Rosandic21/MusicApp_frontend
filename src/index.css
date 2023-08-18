@@ -1,18 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} 
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -102,9 +87,9 @@ tr td {
   background: repeating-linear-gradient(
     35deg,
     rgb(146, 79, 255),
-    rgb(146, 79, 255) 20px, /* Adjust the spacing between color stops */
-    #8a0ffd,   /* A lighter shade of yellow */
-    #8a0ffd 40px /* Adjust the spacing between color stops */
+    rgb(146, 79, 255) 20px, /* 20px spacing between color stops */
+    #8a0ffd,   
+    #8a0ffd 40px /* 40px spacing between color stops */
   );
 }
 
@@ -157,10 +142,10 @@ tr td {
 
 @keyframes bounce {
   from {
-  transform: translateY(0px);
+    transform: translateY(0px);
   }
   to {
-  transform: translateY(-15px);
+    transform: translateY(-15px);
   }
 }
 

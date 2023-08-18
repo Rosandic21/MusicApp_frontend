@@ -1,3 +1,4 @@
+// carousel.js: Generates the carousel for "explore new releases" container
 const carouselSettings = {
         dots: true, // Show navigation dots
         infinite: true, // Enable infinite looping
